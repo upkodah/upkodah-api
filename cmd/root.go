@@ -1,7 +1,14 @@
 package cmd
 
-import "fmt"
+import (
+	"github.com/upkodah/upkodah-api/pkg/api"
+	"github.com/upkodah/upkodah-api/pkg/env"
+)
 
 func Run() {
-	fmt.Print("Upkodah Api Running~")
+	api.RunAPI()
+}
+
+func init() {
+	env.InitDefault()
 }
