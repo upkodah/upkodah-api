@@ -8,29 +8,23 @@ import (
 // stringify Image Array
 type Images string
 
-type RoomShort struct {
-	gorm.Model
-	RoomID    uint
-	RegionID  uint
-	Lat       float32
-	Lon       float32
-	Name      string
-	RmType    string
-	TrdType   string
-	MonPrice  uint
-	CharPrice uint
-	RmSize    float32
-}
-
 type Room struct {
 	gorm.Model
-	Room       RoomShort
+	RegionID   uint
+	Lat        float32
+	Lon        float32
+	Name       string
+	RmType     string
+	TrdType    string
+	MonPrice   uint
+	DpsPrice   uint
+	RmSize     float32
 	Desc       string
 	MngFee     uint
 	Images     Images
 	FlrNum     uint
-	RmCount    uint
-	Facilities facility.Facilities
+	RmCnt      uint
+	Facilities []facility.Facility `gorm:"many2many:room_facilities;"`
 	Addr       string
-	PhNum      string
+	PhnNum     string
 }

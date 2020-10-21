@@ -1,6 +1,9 @@
 package facility
 
-type Facility string
+import "github.com/jinzhu/gorm"
 
 // stringify Facility Array
-type Facilities string
+type Facility struct {
+	gorm.Model
+	Name string
+}

@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/spf13/viper"
 	"github.com/upkodah/upkodah-api/pkg/env"
+	"github.com/upkodah/upkodah-api/pkg/facility"
 	"github.com/upkodah/upkodah-api/pkg/region"
 	"github.com/upkodah/upkodah-api/pkg/room"
 	"log"
@@ -37,7 +38,7 @@ func InitDB() {
 
 func AutoMig() {
 	Conn.AutoMigrate(
-		&room.RoomShort{},
+		&facility.Facility{},
 		&room.Room{},
 		&region.Region{},
 		&region.Search{},

@@ -11,9 +11,9 @@ type Search struct {
 	Lat        float32
 	Lon        float32
 	time       uint
-	count      uint
-	Regions    []Region `gorm:"many2many:search_regions;"`
-	Facilities facility.Facilities
+	cnt        uint
+	Rgns       []Region            `gorm:"many2many:search_regions;"`
+	Facilities []facility.Facility `gorm:"many2many:search_facilities;"`
 }
 
 type Region struct {
@@ -22,5 +22,5 @@ type Region struct {
 	Rgt   int
 	Top   int
 	Btm   int
-	Rooms []room.RoomShort
+	Rooms []room.Room
 }
