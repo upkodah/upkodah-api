@@ -6,9 +6,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/spf13/viper"
 	"github.com/upkodah/upkodah-api/pkg/env"
-	"github.com/upkodah/upkodah-api/pkg/facility"
-	"github.com/upkodah/upkodah-api/pkg/region"
-	"github.com/upkodah/upkodah-api/pkg/room"
 	"log"
 )
 
@@ -34,15 +31,4 @@ func InitDB() {
 	Conn.DB().SetMaxIdleConns(0)
 
 	Conn.Exec(fmt.Sprintf("ALTER DATABASE %s DEFAULT CHARACTER SET utf8", viper.GetString(env.DBName)))
-}
-
-func AutoMig() {
-	Conn.AutoMigrate(
-		&facility.Facility{},
-		&room.Room{},
-		&region.Goo{},
-		&region.Dong{},
-		&region.Grid{},
-		&region.Search{},
-	)
 }

@@ -5,6 +5,9 @@ import (
 	"github.com/spf13/viper"
 	"github.com/upkodah/upkodah-api/pkg/db"
 	"github.com/upkodah/upkodah-api/pkg/env"
+	"github.com/upkodah/upkodah-api/pkg/facility"
+	"github.com/upkodah/upkodah-api/pkg/region"
+	"github.com/upkodah/upkodah-api/pkg/room"
 	"io"
 	"log"
 	"net/http"
@@ -13,15 +16,22 @@ import (
 
 func RunAPI() {
 	db.InitDB()
-	db.AutoMig()
+	autoMigrate()
 
 	r := gin.Default()
 
 	gin.DisableConsoleColor()
 
 	f, err := os.Create("log.txt")
+
+	defer func() {
+		if err := f.Close(); err != nil {
+			log.Fatal("Fail to Close Logging file")
+		}
+	}()
+
 	if err != nil {
-		log.Fatal("Fail to Open Loggin App")
+		log.Fatal("Fail to Open Logging file")
 	}
 	gin.DefaultWriter = io.MultiWriter(f)
 
@@ -45,4 +55,15 @@ func RunAPI() {
 	if err := s.ListenAndServe(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func autoMigrate() {
+	db.Conn.AutoMigrate(
+		&facility.Facility{},
+		&room.Room{},
+		&region.Goo{},
+		&region.Dong{},
+		&region.Grid{},
+		&region.Search{},
+	)
 }
