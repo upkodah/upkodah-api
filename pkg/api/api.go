@@ -66,4 +66,9 @@ func autoMigrate() {
 		&region.Grid{},
 		&region.Search{},
 	)
+  
+	err := s.ListenAndServe()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
