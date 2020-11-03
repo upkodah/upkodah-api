@@ -6,4 +6,5 @@ import "github.com/jinzhu/gorm"
 type Facility struct {
 	gorm.Model
 	Name string
+	Icon string
 }

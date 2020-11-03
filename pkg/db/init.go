@@ -40,7 +40,9 @@ func AutoMig() {
 	Conn.AutoMigrate(
 		&facility.Facility{},
 		&room.Room{},
-		&region.Region{},
+		&region.Goo{},
+		&region.Dong{},
+		&region.Grid{},
 		&region.Search{},
 	)
 }

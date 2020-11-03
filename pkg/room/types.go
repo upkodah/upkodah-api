@@ -10,21 +10,27 @@ type Images string
 
 type Room struct {
 	gorm.Model
-	RegionID   uint
-	Lat        float32
-	Lon        float32
-	Name       string
+	GridID     uint
+	InfoID     uint
 	RmType     string
 	TrdType    string
+	Lat        float64
+	Lon        float64
+	Addr       string
+	Name       string
 	MonPrice   uint
 	DpsPrice   uint
-	RmSize     float32
-	Desc       string
 	MngFee     uint
-	Images     Images
-	FlrNum     uint
-	RmCnt      uint
+	RmSize     float64
 	Facilities []facility.Facility `gorm:"many2many:room_facilities;"`
-	Addr       string
-	PhnNum     string
+}
+
+type Info struct {
+	gorm.Model
+	RoomID uint
+	Desc   string
+	Images Images
+	FlrNum uint
+	RmCnt  uint
+	PhnNum string
 }

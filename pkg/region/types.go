@@ -12,15 +12,30 @@ type Search struct {
 	Lon        float32
 	time       uint
 	cnt        uint
-	Rgns       []Region            `gorm:"many2many:search_regions;"`
+	Goos       []Goo               `gorm:"many2many:search_regions;"`
 	Facilities []facility.Facility `gorm:"many2many:search_facilities;"`
 }
 
-type Region struct {
+type Goo struct {
 	gorm.Model
-	Lft   int
-	Rgt   int
-	Top   int
-	Btm   int
-	Rooms []room.Room
+	Name  string
+	cnt   uint
+	Dongs []Dong
+}
+
+type Dong struct {
+	gorm.Model
+	Name  string
+	cnt   uint
+	GooID uint
+	Grids []Grid
+}
+
+type Grid struct {
+	gorm.Model
+	Lat    float32
+	Lon    float32
+	cnt    uint
+	DongID uint
+	Rooms  []room.Room
 }
