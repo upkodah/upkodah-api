@@ -1,0 +1,10 @@
+# Edit this yaml file in kubernetes cluster
+DB:
+    HOSTNAME: localhost
+    USER: root
+    PASSWORD: mypassword
+    PORT: 3306
+    NAME: upkodah
+PORT:
+    HTTP: 80
+    HTTPS: 443

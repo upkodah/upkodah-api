@@ -1,3 +1,6 @@
+# Log files
+log.txt
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -82,4 +85,3 @@ fabric.properties
 target
 /target
 
-env/
