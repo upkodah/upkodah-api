@@ -85,3 +85,6 @@ fabric.properties
 target
 /target
 
+# Specified In This Project
+/scripts/env.sh
+/env.sh
