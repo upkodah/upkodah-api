@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .DEPLOY_NAME }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .APP_NAME }}
+  template:
+    metadata:
+      labels:
+        app: {{ .APP_NAME }}
+    spec:
+      serviceAccountName: {{ .KSA_NAME }}
+      containers:
+        - name: {{ .APP_NAME }}
+          image: {{ .CONTAINER_IMAGE }}
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .DB_SECRET_NAME }}
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .DB_SECRET_NAME }}
+                  key: password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .DB_SECRET_NAME }}
+                  key: database
+        - name: cloud-sql-proxy
+          # It is recommended to use the latest version of the Cloud SQL proxy
+          # Make sure to update on a regular schedule!
+          image: gcr.io/cloudsql-docker/gce-proxy:1.17
+          command:
+            - "/cloud_sql_proxy"
+
+            # If connecting from a VPC-native GKE cluster, you can use the
+            # following flag to have the proxy connect over private IP
+            # - "-ip_address_types=PRIVATE"
+
+            # Replace DB_PORT with the port the proxy should listen on
+            # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
+            - "-instances={{ .CONNECTION_NAME }}=tcp:{{ .DB_PORT }}"
+          securityContext:
+            # The default Cloud SQL proxy image runs as the
+            # "nonroot" user and group (uid: 65532) by default.
+            runAsNonRoot: true
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .APP_NAME }}-svc
+  labels:
+    app: {{ .APP_NAME }}
+spec:
+  selector:
+    app: {{ .APP_NAME }}
+  ports:
+    - port: 80
+  type: LoadBalancer
