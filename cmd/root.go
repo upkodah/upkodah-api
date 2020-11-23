@@ -10,5 +10,5 @@ func Run() {
 }
 
 func init() {
-	env.InitDefault()
+	env.InitConfig()
 }

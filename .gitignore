@@ -82,4 +82,7 @@ fabric.properties
 target
 /target
 
-env/
+# Specified In This Project
+/scripts/env.sh
+/env.sh
+credential.json

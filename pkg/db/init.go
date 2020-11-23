@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/spf13/viper"
 	"github.com/upkodah/upkodah-api/pkg/env"
 	"log"
+	"os"
 )
 
 var (
@@ -15,20 +15,22 @@ var (
 
 func InitDB() {
 	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
-		viper.GetString(env.DBUser),
-		viper.GetString(env.DBPassword),
-		viper.GetString(env.DBHostname),
-		viper.GetString(env.DBPort),
-		viper.GetString(env.DBName),
+		os.Getenv(env.DBUser),
+		os.Getenv(env.DBPassword),
+		os.Getenv(env.DBHost),
+		os.Getenv(env.DBPort),
+		os.Getenv(env.DBName),
 	)
-	var err error
-	fmt.Printf("db url : %s", dbURI)
-	Conn, err = gorm.Open("mysql", dbURI)
+	log.Printf("db url : %s", dbURI)
+
+	conn, err := gorm.Open("mysql", dbURI)
 	if err != nil {
 		log.Fatal("Got error when connect database")
 	}
 
+	Conn = conn
+
 	Conn.DB().SetMaxIdleConns(0)
 
-	Conn.Exec(fmt.Sprintf("ALTER DATABASE %s DEFAULT CHARACTER SET utf8", viper.GetString(env.DBName)))
+	Conn.Exec(fmt.Sprintf("ALTER DATABASE %s DEFAULT CHARACTER SET utf8", os.Getenv(env.DBName)))
 }
