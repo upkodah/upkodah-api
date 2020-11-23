@@ -23,11 +23,16 @@ if [ -z "$PROJECT" ]; then
   exit 1
 fi
 
-echo "Enable CloudBuild api"
-gcloud services enable cloudbuild.googleapis.com
+
+CLOUD_BUILD=cloudbuild.googleapis.com
+if [[ $(gcloud services list --format="value(serviceConfig.name)" \
+                              --filter="serviceConfig.name:${CLOUD_BUILD}" 2>&1) != \
+                              "$CLOUD_BUILD" ]]; then
+  echo "Enabling $CLOUD_BUILD"
+  gcloud services enable "$CLOUD_BUILD"
+else
+  echo "$CLOUD_BUILD is already enabled"
+fi
 
 echo "Build Docker File and Submit to ${CONTAINER_IMAGE}"
-cd "$ROOT"/../
-gcloud builds submit --tag "$CONTAINER_IMAGE" .
-
-cd "$ROOT"/
+gcloud builds submit --tag "$CONTAINER_IMAGE" ..

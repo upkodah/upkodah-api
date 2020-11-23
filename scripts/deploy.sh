@@ -33,13 +33,13 @@ fi
 echo "Get Cluster Credentials"
 gcloud container clusters get-credentials "$CLUSTER_NAME" --zone "$CLUSTER_ZONE"
 
-DEPLOY_TEMPLATE=$(cat "$ROOT"/../deploy/deploy_template.yaml | sed \
--e "s/{{ .DEPLOY_NAME }}/${DEPLOY_NAME}/g" \
--e "s/{{ .APP_NAME }}/${APP_NAME}/g" \
--e "s/{{ .KSA_NAME }}/${KSA_NAME}/g" \
--e "s/{{ .CONTAINER_IMAGE }}/${CONTAINER_IMAGE}/g" \
--e "s/{{ .DB_SECRET_NAME }}/${DB_SECRET_NAME}/g" \
--e "s/{{ .CONNECTION_NAME }}/${CONNECTION_NAME}/g" \
--e "s/{{ .DB_PORT }}/${DB_PORT}/g"
+DEPLOY_TEMPLATE=$(< "$ROOT"/../deploy/deploy_template.yaml sed \
+-e "s,{{ .DEPLOY_NAME }},${DEPLOY_NAME},g" \
+-e "s,{{ .APP_NAME }},${APP_NAME},g" \
+-e "s,{{ .KSA_NAME }},${KSA_NAME},g" \
+-e "s,{{ .CONTAINER_IMAGE }},${CONTAINER_IMAGE},g" \
+-e "s,{{ .DB_SECRET_NAME }},${DB_SECRET_NAME},g" \
+-e "s,{{ .CONNECTION_NAME }},${CONNECTION_NAME},g" \
+-e "s,{{ .DB_PORT }},${DB_PORT},g"
 )
-echo "${DEPLOY_TEMPLATE}" | kubectl apply -f -
+echo "$DEPLOY_TEMPLATE" | kubectl apply -n "$NAMESPACE" -f -
