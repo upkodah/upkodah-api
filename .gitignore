@@ -1,6 +1,3 @@
-# Log files
-log.txt
-
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -88,3 +85,4 @@ target
 # Specified In This Project
 /scripts/env.sh
 /env.sh
+credential.json

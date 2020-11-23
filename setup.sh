@@ -4,8 +4,8 @@ ROOT=$(dirname "${BASH_SOURCE[0]}")
 
 LC_CTYPE=C
 
-if [ ! -f './env.sh' ]; then
-  echo "Please make setting.sh file from setting_example.sh";
+if [ ! -f "${ROOT}/scripts/env.sh" ]; then
+  echo "Please make env.sh file in ./scripts dir from env_example.sh";
 fi
 
 echo "Check kubectl and gcloud"
@@ -16,7 +16,7 @@ command -v kubectl >/dev/null 2>&1 || \
   { echo >&2 "I require kubectl but it's not installed.  Aborting."; exit 1; }
 
 echo "Setting Variables"
-source "$ROOT"/env.sh
+source "$ROOT"/scripts/env.sh
 
 if [ -z "$CLUSTER_ZONE" ]; then
   echo "Make sure that compute/zone is set in gcloud config"
@@ -32,5 +32,5 @@ echo "Get Cluster Credentials"
 gcloud container clusters get-credentials "$CLUSTER_NAME" --zone "$CLUSTER_ZONE"
 
 # Setting Components
-sh "$ROOT"/enable_apis.sh
-sh "$ROOT"/sql_proxy.sh
+sh "$ROOT"/scripts/enable_apis.sh
+sh "$ROOT"/scripts/sql_proxy.sh

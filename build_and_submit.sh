@@ -4,8 +4,8 @@ ROOT=$(dirname "${BASH_SOURCE[0]}")
 
 LC_CTYPE=C
 
-if [ ! -f './env.sh' ]; then
-  echo "Please make setting.sh file from setting_example.sh";
+if [ ! -f "${ROOT}/scripts/env.sh" ]; then
+  echo "Please make env.sh file in ./scripts dir from env_example.sh";
 fi
 
 echo "Check kubectl and gcloud"
@@ -16,10 +16,25 @@ command -v kubectl >/dev/null 2>&1 || \
   { echo >&2 "I require kubectl but it's not installed.  Aborting."; exit 1; }
 
 echo "Setting Variables"
-source "$ROOT"/env.sh
+source "$ROOT"/scripts/env.sh
 
 if [ -z "$PROJECT" ]; then
   echo "Check Your PROJECT variable"
+  exit 1
+fi
+
+if [ -z "$APP_NAME" ]; then
+  echo "Check Your APP_NAME variable"
+  exit 1
+fi
+
+if [ -z "$APP_VERSION" ]; then
+  echo "Check Your APP_VERSION variable"
+  exit 1
+fi
+
+if [ -z "$CONTAINER_IMAGE" ]; then
+  echo "Check Your PROJECT CONTAINER_IMAGE and does it exit"
   exit 1
 fi
 
@@ -35,4 +50,4 @@ else
 fi
 
 echo "Build Docker File and Submit to ${CONTAINER_IMAGE}"
-gcloud builds submit --tag "$CONTAINER_IMAGE" ..
+gcloud builds submit --tag "$CONTAINER_IMAGE" .
