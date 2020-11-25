@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 # Cluster constants
-export NODEPOOL_NAME="YOUR_NODEPOOL_NAME"
 export CLUSTER_NAME="YOUR_CLUSTER_NAME"
 export PROJECT="YOUR_PROJECT"
 export CLUSTER_ZONE=$(gcloud config get-value compute/zone)

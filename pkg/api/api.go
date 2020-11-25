@@ -24,9 +24,8 @@ func RunAPI() {
 	v1 := r.Group("/v1")
 	{
 		v1.GET("/setting", getSetting)
-		//v1.GET("/rooms", getRooms)
-		//v1.GET("/room/info/:id", getRoomInfo)
-
+		v1.GET("/rooms", getRooms)
+		v1.GET("/room/info/:id", getInfo)
 	}
 
 	s := &http.Server{
@@ -45,4 +44,7 @@ func autoMigrate() {
 		&room.Room{},
 		&room.Info{},
 	)
+	alterQuery := "ALTER DATABASE " + os.Getenv(env.DBName) + " CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci"
+	db.Conn.Exec(alterQuery)
+	db.Conn.Exec("ALTER TABLE infos CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
 }

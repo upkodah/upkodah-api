@@ -14,7 +14,7 @@ var (
 )
 
 func InitDB() {
-	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
+	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		os.Getenv(env.DBUser),
 		os.Getenv(env.DBPassword),
 		os.Getenv(env.DBHost),
@@ -29,8 +29,5 @@ func InitDB() {
 	}
 
 	Conn = conn
-
 	Conn.DB().SetMaxIdleConns(0)
-
-	Conn.Exec(fmt.Sprintf("ALTER DATABASE %s DEFAULT CHARACTER SET utf8", os.Getenv(env.DBName)))
 }
