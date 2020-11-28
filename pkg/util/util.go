@@ -3,7 +3,11 @@ package util
 import (
 	"bytes"
 	"encoding/json"
+	xj "github.com/basgys/goxml2json"
+	"io"
 	"log"
+	"net/http"
+	"net/url"
 )
 
 func BytesToPrettyJsonString(data []byte) string {
@@ -22,4 +26,25 @@ func ObjectToString(data interface{}) string {
 		return ""
 	}
 	return BytesToPrettyJsonString(b)
+}
+
+func ReqGet(url string, queries map[string]string) (*http.Response, error) {
+	fullURL := makeFullURL(url, queries)
+	return http.Get(fullURL)
+}
+
+func makeFullURL(urlPath string, queries map[string]string) string {
+	params := url.Values{}
+	for key, val := range queries {
+		params.Add(key, val)
+	}
+	return urlPath + "?" + params.Encode()
+}
+
+func Xml2json(data io.ReadCloser) (*bytes.Buffer, error) {
+	buf, err := xj.Convert(data)
+	if err != nil {
+		return nil, err
+	}
+	return buf, err
 }
