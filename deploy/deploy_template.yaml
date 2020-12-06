@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: {{ .DEPLOY_NAME }}
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: {{ .APP_NAME }}
@@ -41,6 +42,11 @@ spec:
                 secretKeyRef:
                   name: {{ .DB_SECRET_NAME }}
                   key: host
+            - name: BUS_SERVICE_KEY
+              value: {{ .BUS_SERVICE_KEY }}
+            - name: METRO_SERVICE_KEY
+              value: {{ .METRO_SERVICE_KEY }}
+
         - name: cloud-sql-proxy
           # It is recommended to use the latest version of the Cloud SQL proxy
           # Make sure to update on a regular schedule!

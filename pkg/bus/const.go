@@ -1,9 +1,7 @@
 package bus
 
 const (
-	ApiURL      = "http://ws.bus.go.kr/api/rest"
-	ServiceKey  = "SVpCy0bvZ5pGxpQdz6HmdUFgFl5L6vUbmK9tzQAPslFjjRHSBsKGTvYAkRC84aHoeUct2mtsiD8YfWyEzOQMIQ=="
-	ServiceKey2 = "HanzWtP9x/nSgWRxF4qGoEDl0xOThCoh0iHrOfZO1qBQKtX0OMS4oif+D7etP3uqnukMUzsQ+EsI3d2EAfOYSw=="
+	ApiURL = "http://ws.bus.go.kr/api/rest"
 
 	StationPathURL = ApiURL + "/stationinfo"
 	RoutePathURL   = ApiURL + "/busRouteInfo"
@@ -19,3 +17,5 @@ const (
 	LAT_MAX = 37.715133  // 서울특별시 위도 상한 Y
 	LAT_MIN = 37.413294  // 서울특별시 위도 하한
 )
+
+var serviceKey string

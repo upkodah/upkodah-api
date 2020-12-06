@@ -11,4 +11,8 @@ const (
 	// API
 	HTTPPort  = "HTTP_PORT"
 	HTTPSPort = "HTTPS_PORT"
+
+	// third party API
+	BusServiceKey   = "BUS_SERVICE_KEY"
+	MetroServiceKey = "METRO_SERVICE_KEY"
 )
