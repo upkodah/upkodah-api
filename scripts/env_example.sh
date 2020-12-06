@@ -13,6 +13,10 @@ export HTTP_PORT="YOUR_HTTP_PORT"
 export DEPLOY_NAME="$APP_NAME"-deployment
 export CONTAINER_IMAGE=gcr.io/"$PROJECT"/"$APP_NAME":"$APP_VERSION"
 
+# third party API constants
+export BUS_SERVICE_KEY="MY_BUS_SERVICE_KEY"
+export METRO_SERVICE_KEY="MY_METRO_SERVICE_KEY"
+
 # DB constants
 export INSTANCE_NAME="YOUR_INSTANCE_NAME"
 export DB_NAME="YOUR_DB_NAME"

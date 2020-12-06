@@ -3,6 +3,9 @@ package util
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
+	xj "github.com/basgys/goxml2json"
+	"io"
 	"log"
 )
 
@@ -22,4 +25,12 @@ func ObjectToString(data interface{}) string {
 		return ""
 	}
 	return BytesToPrettyJsonString(b)
+}
+
+func Xml2json(data io.ReadCloser) (*bytes.Buffer, error) {
+	buf, err := xj.Convert(data)
+	if err != nil {
+		return nil, errors.New("Xml2json/" + err.Error())
+	}
+	return buf, err
 }

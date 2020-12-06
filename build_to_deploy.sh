@@ -51,3 +51,20 @@ fi
 
 echo "Build Docker File and Submit to ${CONTAINER_IMAGE}"
 gcloud builds submit --tag "$CONTAINER_IMAGE" .
+
+echo "Get Cluster Credentials"
+gcloud container clusters get-credentials "$CLUSTER_NAME" --zone "$CLUSTER_ZONE"
+
+DEPLOY_TEMPLATE=$(< "$ROOT"/deploy/deploy_template.yaml sed \
+-e "s,{{ .DEPLOY_NAME }},${DEPLOY_NAME},g" \
+-e "s,{{ .APP_NAME }},${APP_NAME},g" \
+-e "s,{{ .CONTAINER_IMAGE }},${CONTAINER_IMAGE},g" \
+-e "s,{{ .DB_SECRET_NAME }},${DB_SECRET_NAME},g" \
+-e "s,{{ .DB_PORT }},${DB_PORT},g" \
+-e "s,{{ .CONNECTION_NAME }},${CONNECTION_NAME},g" \
+-e "s,{{ .GSA_SECRET_NAME }},${GSA_SECRET_NAME},g" \
+-e "s,{{ .GSA_SECRET_VOLUME }},${GSA_SECRET_VOLUME},g" \
+-e "s,{{ .BUS_SERVICE_KEY }},${BUS_SERVICE_KEY},g" \
+-e "s,{{ .METRO_SERVICE_KEY }},${METRO_SERVICE_KEY},g"
+)
+echo "$DEPLOY_TEMPLATE" | kubectl apply -n "$NAMESPACE" -f -

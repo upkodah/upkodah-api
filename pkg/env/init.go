@@ -16,6 +16,10 @@ func InitConfig() {
 	// Config API
 	setDefaultEnvStr(HTTPPort, "80")
 	setDefaultEnvStr(HTTPSPort, "443")
+
+	// Config third party API
+	setDefaultEnvStr(BusServiceKey, "BUS_SERVICE_KEY")
+	setDefaultEnvStr(MetroServiceKey, "METRO_SERVICE_KEY")
 }
 
 func setDefaultEnvStr(key string, val string) {

@@ -40,6 +40,8 @@ DEPLOY_TEMPLATE=$(< "$ROOT"/deploy/deploy_template.yaml sed \
 -e "s,{{ .DB_PORT }},${DB_PORT},g" \
 -e "s,{{ .CONNECTION_NAME }},${CONNECTION_NAME},g" \
 -e "s,{{ .GSA_SECRET_NAME }},${GSA_SECRET_NAME},g" \
--e "s,{{ .GSA_SECRET_VOLUME }},${GSA_SECRET_VOLUME},g"
+-e "s,{{ .GSA_SECRET_VOLUME }},${GSA_SECRET_VOLUME},g" \
+-e "s,{{ .BUS_SERVICE_KEY }},${BUS_SERVICE_KEY},g" \
+-e "s,{{ .METRO_SERVICE_KEY }},${METRO_SERVICE_KEY},g"
 )
 echo "$DEPLOY_TEMPLATE" | kubectl apply -n "$NAMESPACE" -f -
