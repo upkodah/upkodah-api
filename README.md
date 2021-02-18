@@ -8,7 +8,7 @@ API List
 2. GET http://{domain}/setting
     - 앱의 초기 세팅을 가져와 주는 api 입니다. 현재는 편의시설 목록을 가져와주고 있습니다.
     - request  queries : 없음
-    - 예시 : GET {ip_address}/setting
+    - 예시 : GET www.upkodah.com/setting
 
 3. GET http://{domain}/v1/rooms
     - upkodah db에 있는 매물들을 원하는 latitude, longitude에서 time만큼 떨어진 매물을 가져와주는 api입니다.
@@ -30,16 +30,16 @@ API List
         - deposit : 사용자가 원하는 매물 보증금의 상향가를 의미합니다. 만원 단위이며 입력하지 않을 시 최대 월세로 지정됩니다.
         `default`값은 10000000 입니다. ex) 50
     - 요청 예시 :
-        <http://34.64.166.133:80/v1/rooms/?facilities=헬스클럽&estate_type=0&trade_type=0&latitude=37.5759689663327&longitude=126.976861018866&price=50&deposit=10000&time=30>
+        <http://www.upkodah.com/v1/rooms/?facilities=헬스클럽&estate_type=0&trade_type=0&latitude=37.5759689663327&longitude=126.976861018866&price=50&deposit=10000&time=30>
 
 4. GET http://{domain}/v1/rooms/:search_id
     - 기존에 검색했던 search_id를 통해 매물을 가져오는 쿼리 입니다. 캐싱을 하기 때문에 자원을 소모하지 않고 더 빠르게 가져올 수 있습니다.
     - request queries : 없음
     - 요청 예시 :
-        <http://34.64.166.133:80/v1/rooms/1>
+        <http://www.upkodah.com/v1/rooms/1>
 
 5. GET http://{domain}/v1/room/:id/info
     - upkodah db의 매물에 해당하는 상세 정보를 가져와 주는 api입니다. room의 id를 parameter로 받아 사용합니다.
     - request queries : 없음
     - 요청 예시 :
-        <http://34.64.166.133:80/v1/room/300/info>
+        <http://www.upkodah.com/v1/room/300/info>
